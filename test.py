@@ -1,8 +1,11 @@
-import json
+"""
+Test ClothesPredictor
+"""
 
-file_addr = "C:/Users/user/Downloads/city.list.json"
-with open(file_addr, "r", encoding="utf-8") as file:
-    lines = file.readlines()
-json_file = json.loads("".join(lines))
-kha = [el for el in json_file if el["name"] == 'Kharkiv']
-print(kha)
+import logging
+
+from clothes_prediction import ApiGetter
+
+api_getter = ApiGetter()
+current_weather = api_getter.get_weather()
+logging.debug(current_weather)
