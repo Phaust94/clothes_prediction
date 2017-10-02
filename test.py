@@ -2,8 +2,7 @@
 Test ClothesPredictor
 """
 
-import logging
-
+# import logging
 
 from clothes_prediction import ApiGetter
 

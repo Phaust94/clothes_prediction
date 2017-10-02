@@ -15,9 +15,9 @@ class ApiGetter:
 
     _api_key = None
     _default_city = 706483  # Kharkiv, Ukraine
-    default_api_key_path = "C:/Коханий/projects/clothes_prediction_project/clothes_prediction/data/api_key.txt"
+    _default_api_key_path = "C:/Коханий/projects/clothes_prediction_project/clothes_prediction/data/api_key.txt"
 
-    def __init__(self, city: int = None):
+    def __init__(self, city: int = None, api_key_path: str = None) -> None:
         """
         Instantiates API caller instance with given city
         :param city: (optional) city_id to use. The default city is ApiGetter._default_city
@@ -27,7 +27,8 @@ class ApiGetter:
             city = self._default_city
 
         self.city = city
-        self._load_api_key()
+
+        self._load_api_key(api_key_path)
 
     def _load_api_key(self, api_key_path: str = None) -> None:
         """
@@ -37,7 +38,7 @@ class ApiGetter:
         """
         if self._api_key is None:
             if api_key_path is None:
-                api_key_path = self.default_api_key_path
+                api_key_path = self._default_api_key_path
             with open(api_key_path, 'r') as api_key_file:
                 api_key = api_key_file.readline()
             self._api_key = api_key
@@ -67,8 +68,8 @@ class ApiGetter:
         cleaned_up_weather = dict()
         try:
             main_part = api_response["main"]
-            temp_fahrenheit: float = main_part['temp']
-            temp_celsius = (temp_fahrenheit - 32) * 5 / 9
+            temp_kelvin: float = main_part['temp']
+            temp_celsius = temp_kelvin - 273
             cleaned_up_weather['Temp'] = temp_celsius
             cleaned_up_weather['Pressure'] = main_part['pressure']
             cleaned_up_weather['Humidity'] = main_part['humidity']
